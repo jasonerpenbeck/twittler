@@ -3,24 +3,92 @@
   <head>
     <script src="jquery.js"></script>
     <script src="data_generator.js"></script>
+    <link rel="stylesheet" href="twittler.css">
   </head>
   <body>
+
+
     <script>
 
-      $(document).ready(function(){
+      // Initialize showUser variable and set it to what is in URL string, if anything
+      var showUser = '';
+      if(document.URL.split('?').length > 1) {
+        console.log("Return User Specific Tweets");
+        showUser = document.URL.split('?')[1].substr(2);
+        console.log(showUser);
+      }
+
+      // Initialize an array of month names: need this for basic date formatting
+      var monthNames = ["January","February","March","April","May","June","July","August","September","October","November","December"];
+
+      // function that formats date in the basic Month Day, Year configuration
+      function basicDate (date) {
+        return monthNames[date.getMonth()] + " " + date.getDate() + ", " + date.getFullYear();
+      }
+
+      // function that makes link building easier
+      function link(url,text) {
+        return ['<a href=',url,'>',text,'</a>'].join('');
+      }
+
+      function div(contains,divClass,divID) {
+
+        var classInDiv = divClass ? "class = " + divClass: '';
+        var idInDiv = divID ? "class = " + divID: '';
+
+        return '<div ' + classInDiv + ' ' +  idInDiv + '>' + contains + '</div>';
+      }
+
+      // function that builds div structure of each tweet
+      function displayTweet(user,message,date) {
+
+       return [
+       '<div class="tweetContainer">',
+          div(div(link('#?' + user,'@' + user),"tweetUser") + div(date,"tweetTime"),"tweetTopLine"),
+          div(message,"tweetBottomLine"),
+        '</div>'].join('');
+      }
+
+
+      $(document).ready(showtheTweets());
+
+      function showtheTweets() {
+
+        var singleUser = arguments.length > 0 ? arguments[0] : false;
+        console.log(arguments.length);
+        console.log(singleUser);
+
         var $body = $('body');
         $body.html('');
 
-        var index = streams.home.length - 1;
+       // console.log(streams.home.length);
+
+        var index = (singleUser) ? streams.users[singleUser].length : Math.min(25,streams.home.length - 1);
+
+
+//        var $getNew = $(div(link("index.html","Get New Tweets"),"getNew"));
+//        $getNew.appendTo($body);
+
         while(index >= 0){
-          var tweet = streams.home[index];
-          var $tweet = $('<div></div>');
-          $tweet.text('@' + tweet.user + ': ' + tweet.message + ' created at: ' + tweet.created_at);
-          $tweet.appendTo($body);
+          var tweet = (singleUser) ? streams.users[singleUser][index]: streams.home[index];
+
+
+            if(showUser === tweet.user || !(showUser)) {
+              var $tweet = $(displayTweet(tweet.user,tweet.message,basicDate(tweet.created_at)));
+              $tweet.appendTo($body);
+            }
+
           index -= 1;
         }
 
-      });
+        $('.tweetContainer:even').css({'border':'0px white solid','background': 'white'});
+
+     }
+
+
+
+    setInterval(showtheTweets, 1000);
+
 
     </script>
   </body>
