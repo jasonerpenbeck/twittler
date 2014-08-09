@@ -11,14 +11,53 @@
 
     <script>
 
+      var settings = {};
+
       // Initialize an array of month names: need this for basic date formatting
-      var monthNames = ["January","February","March","April","May","June","July","August","September","October","November","December"];
+      settings.monthNames = ["January","February","March","April","May","June","July","August","September","October","November","December"];
+
       // Initialize username for single-user mode
-      var username;
+      settings.username = 'all';
+
+      // Limit number of tweets to be processed on page
+      settings.tweetLimit = 250;
+
+
+      function relDate(date) {
+        var timeElapsed = Date.now() - date;
+        var pluralText;
+        var timeCalc;
+
+        if(timeElapsed <=1000) {
+          return "Just now";
+        }
+
+        else if(timeElapsed<60000) {
+          timeCalc = Math.floor(timeElapsed/1000);
+          pluralText = (timeCalc === 1) ? "second" : "seconds";
+        }
+
+        else if(timeElapsed<3600000) {
+          timeCalc = Math.floor(timeElapsed/60000);
+          pluralText = (timeCalc === 1) ?  "minute" : "minutes";
+        }
+
+        else if(timeElapsed<86400000) {
+          timeCalc = Math.floor(timeElapsed/3600000);
+          pluralText = (timeCalc === 1) ? "hour" : "hours";
+        }
+
+        else {
+          timeCalc = Math.floor(timeElapsed/86400000);
+          pluralText = (timeCalc === 1) ? "day" : "days";
+        }
+
+        return timeCalc + " " + pluralText + " ago";
+      }
 
       // function that formats date in the basic Month Day, Year configuration
       function basicDate (date) {
-        return monthNames[date.getMonth()] + " " + date.getDate() + ", " + date.getFullYear();
+        return settings.monthNames[date.getMonth()] + " " + date.getDate() + ", " + date.getFullYear();
       }
 
       // function that makes link building easier
@@ -30,7 +69,6 @@
 
         var classInDiv = divClass ? "class = " + divClass: '';
         var idInDiv = divID ? "id = " + divID: '';
-
         return '<div ' + classInDiv + ' ' +  idInDiv + '>' + contains + '</div>';
       }
 
@@ -49,19 +87,17 @@
 
      function displayTweets() {
 
-        //var singleUser = arguments.length > 0 ? arguments[0] : false;
-        var singleUser = arguments[0] || false;
-
         var $body = $('body');
         $body.html('');
 
         // limit the total number of displayed tweets to 25
-        var index = (singleUser) ? streams.users[singleUser].length-1 : streams.home.length - 1;
+        var index = (settings.username === 'all') ? streams.home.length - 1 : streams.users[settings.username].length-1 ;
+        console.log(index);
 
         while(index >= 0){
 
-          var tweet = (singleUser) ? streams.users[singleUser][index] : streams.home[index];
-          var $tweet = $(formatTweet(tweet.user,tweet.message,basicDate(tweet.created_at)));
+          var tweet = (settings.username === 'all') ? streams.home[index] : streams.users[settings.username][index] ;
+          var $tweet = $(formatTweet(tweet.user,tweet.message,relDate(tweet.created_at)));
           $tweet.appendTo($body);
           index -= 1;
         }
@@ -72,18 +108,24 @@
      }
 
       // show tweets once the document is ready and every two seconds after
+
+
       $(document).ready(function() {
-        setInterval(displayTweets(username),2000);
+        console.log("Ready");
 
+        // Set username
+        // this is not resetting the username
 
-        $('.tweetContainer').click(function(event) {
-          username = $(this).attr('id');
-          setInterval(displayTweets(username),2000);
+        $('.tweetContainer').click(function(){
+         settings.username = $(this).attr('id');
 
+         console.log(settings.username);
         });
 
-
        });
+
+      setInterval(displayTweets,3000);
+
 
     </script>
   </body>
