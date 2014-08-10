@@ -24,6 +24,7 @@
       settings.tweeter = "Jason";
       visitor = settings.tweeter;
 
+      // function that calculates relative time and returns the appropriate descriptive text
       function relDate(date) {
         var timeElapsed = Date.now() - date;
         var pluralText;
@@ -66,6 +67,7 @@
         return ['<a href=',url,'>',text,'</a>'].join('');
       }
 
+      // function that builds div tags - not great for nested divs
       function div(contains,divClass,divID) {
 
         var classInDiv = divClass ? "class = " + divClass: '';
@@ -82,15 +84,16 @@
        ['<div class="tweetUser">','<a href="#" class="userLink" id=',user,'>','@',user,'</div>'].join(''),
        '<div class="tweetTime">' + date + '</div>',
        '</div>',
-       div(index + ' / '+ message,"tweetBottomLine"),
+       div(message,"tweetBottomLine"),
+//     div(index + ' / '+ message,"tweetBottomLine"),
        '</div>'].join('');
       }
 
 
 
      function displayTweets() {
-       console.log(settings.user);
 
+       // allTweets is the container of the stream of tweets
        var $allTweets = $('.allTweets');
        $allTweets.html('');
 
@@ -117,14 +120,16 @@
       $(document).ready(function() {
         console.log("Ready");
 
+        // add user's tweet to full stream & reset user to 'all'
         $('#tweetForm').on('submit',function(e) {
           e.preventDefault();
           var tweetVal = $('.tweetMessage').val();
           settings.user='all';
           writeTweet(tweetVal);
+          $('.tweetMessage').val("Tweet Something!");
         });
 
-        // Set username
+        // Set username to whatever was clicked upon
         $(document).on('click','a.userLink', function(e){
           e.preventDefault();
           settings.user = $(this).attr('id');
