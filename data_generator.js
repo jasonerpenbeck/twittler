@@ -44,6 +44,7 @@ var generateRandomTweet = function(){
   tweet.message = randomMessage();
   tweet.created_at = new Date();
   addTweet(tweet);
+
 };
 
 for(var i = 0; i < 10; i++){
@@ -56,14 +57,20 @@ var scheduleNextTweet = function(){
 };
 scheduleNextTweet();
 
+
+
 // utility function for letting students add "write a tweet" functionality
 // (note: not used by the rest of this file.)
 var writeTweet = function(message){
   if(!visitor){
     throw new Error('set the global visitor property!');
   }
+
+  streams.users[visitor] = streams.users[visitor] || [];
+
   var tweet = {};
   tweet.user = visitor;
   tweet.message = message;
+  tweet.created_at = new Date();
   addTweet(tweet);
 };
