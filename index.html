@@ -113,13 +113,17 @@
         }
 
         console.log(index);
+        var tweetDisplayLimit = Math.min(index,settings.tweetLimit);
+        var tweetDisplayCount = 0;
 
-        while(index >= 0){
+        while(tweetDisplayCount <= tweetDisplayLimit){
+          // limit the number of tweets to what is in settings.tweetLimit
 
           var tweet = (settings.user === 'all') ? streams.home[index] : streams.users[settings.user][index] ;
           var $tweet = $(formatTweet(tweet.user,tweet.message,relDate(tweet.created_at),index));
           $tweet.appendTo($allTweets);
           index -= 1;
+          tweetDisplayCount +=1;
         }
 
 
