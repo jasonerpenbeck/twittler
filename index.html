@@ -89,8 +89,6 @@
        '</div>'].join('');
       }
 
-
-
      function displayTweets() {
 
        // allTweets is the container of the stream of tweets
@@ -99,6 +97,12 @@
 
         // limit the total number of displayed tweets to 25
         var index = (settings.user === 'all') ? streams.home.length - 1 : streams.users[settings.user].length-1 ;
+
+        if(settings.user !== 'all') {
+          $('#tweetCount').html(' (' + (index+1) + ') ');
+          $('#lastTweetDate').html('Last Tweet: ' + relDate(streams.users[settings.user][index].created_at));
+        }
+
         console.log(index);
 
         while(index >= 0){
@@ -109,13 +113,14 @@
           index -= 1;
         }
 
+
         // format every other tweet as border-less
         $('.tweetContainer:even').css({'border':'0px white solid','background': 'white'});
 
      }
 
       // show tweets once the document is ready and every second after
-      setInterval(displayTweets,1000);
+      setInterval(displayTweets,3000);
 
       $(document).ready(function() {
         console.log("Ready");
@@ -134,6 +139,8 @@
           e.preventDefault();
           settings.user = $(this).attr('id');
           console.log("userLink was clicked: " + settings.user);
+          $('.userDetails').html('Tweets from: @' + settings.user + ' ');
+
           displayTweets();
 
           });
@@ -143,8 +150,12 @@
     </script>
 
     <form id="tweetForm" action="#">
-      <input class="tweetMessage" type="text" maxlength="140"/ value="Tweet Something!"> <button type="submit" class="send">send</button>
+      <input class="tweetMessage" type="text" maxlength="140" size="140" value="Tweet Something!"> <button type="submit" class="send">send</button>
     </form>
+
+    <div class="userDetails"></div>
+    <div id="tweetCount"></div>
+    <div id="lastTweetDate"></div>
 
     <div class="allTweets"></div>
 
