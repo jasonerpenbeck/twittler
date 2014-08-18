@@ -67,7 +67,8 @@ a {
 
 .allTweets {
   clear: all;
-  margin-top: 30px;
+  padding-top: 50px;
+
 }
 
 #tweetCount {
@@ -82,7 +83,11 @@ a {
   float: left;
   color: olive;
   opacity: 75%;
-  padding-bottom: 20px;
+}
+
+#allTweetsLink {
+  clear: left;
+  float: left;
 }
 
 .send {

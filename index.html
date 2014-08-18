@@ -101,6 +101,15 @@
         if(settings.user !== 'all') {
           $('#tweetCount').html(' (' + (index+1) + ') ');
           $('#lastTweetDate').html('Last Tweet: ' + relDate(streams.users[settings.user][index].created_at));
+          $('.userDetails').html('Tweets from: @' + settings.user + ' ');
+          $('#allTweetsLink').html('<a href="#" id="viewAllTweets">Read All Tweets</a>');
+        }
+
+        else {
+          $('#tweetCount').html('');
+          $('#lastTweetDate').html('');
+          $('.userDetails').html('');
+          $('#allTweetsLink').html('');
         }
 
         console.log(index);
@@ -139,11 +148,15 @@
           e.preventDefault();
           settings.user = $(this).attr('id');
           console.log("userLink was clicked: " + settings.user);
-          $('.userDetails').html('Tweets from: @' + settings.user + ' ');
-
           displayTweets();
 
           });
+
+        $(document).on('click','#viewAllTweets',function(e) {
+          e.preventDefault();
+          settings.user = 'all';
+          displayTweets();
+        });
 
        });
 
@@ -156,6 +169,7 @@
     <div class="userDetails"></div>
     <div id="tweetCount"></div>
     <div id="lastTweetDate"></div>
+    <div id="allTweetsLink"></div>
 
     <div class="allTweets"></div>
 
