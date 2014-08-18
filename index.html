@@ -81,7 +81,7 @@
        return [
        '<div class="tweetContainer">',
        '<div class="tweetTopLine">',
-       ['<div class="tweetUser">','<a href="#" class="userLink" id=',user,'>','@',user,'</div>'].join(''),
+       ['<div class="tweetUser">','<a href="#" class="userLink" id=',user,'>','@',user,'</a></div>'].join(''),
        '<div class="tweetTime">' + date + '</div>',
        '</div>',
        div(message,"tweetBottomLine"),
@@ -99,10 +99,10 @@
         var index = (settings.user === 'all') ? streams.home.length - 1 : streams.users[settings.user].length-1 ;
 
         if(settings.user !== 'all') {
-          $('#tweetCount').html(' (' + (index+1) + ') ');
-          $('#lastTweetDate').html('Last Tweet: ' + relDate(streams.users[settings.user][index].created_at));
-          $('.userDetails').html('Tweets from: @' + settings.user + ' ');
-          $('#allTweetsLink').html('<a href="#" id="viewAllTweets">Read All Tweets</a>');
+          $('.userDetails').html('@' + settings.user + ' ');
+          $('#tweetCount').html(' |  Count: ' + (index+1) + ' ');
+          $('#lastTweetDate').html(' | Most Recent: ' + relDate(streams.users[settings.user][index].created_at));
+          $('#allTweetsLink').html('<a href="#" id="viewAllTweets">See All Tweets</a><br><br>');
         }
 
         else {

@@ -5,8 +5,10 @@ body {
 
 a {
   text-decoration: none;
-  color: olive;
+  color: green;
+
 }
+
 
 .tweet {
   color: lime;
@@ -44,6 +46,7 @@ a {
   padding: 5px;
   clear: both;
   font-size: 16px;
+  color: olive;
 }
 
 .tweetUser {
@@ -74,12 +77,11 @@ a {
 #tweetCount {
   float: left;
   margin-left: 10px;
-  font-weight: bold;
   color: olive;
 }
 
 #lastTweetDate {
-  clear: left;
+  padding-left: 12px;
   float: left;
   color: olive;
   opacity: 75%;
@@ -88,6 +90,7 @@ a {
 #allTweetsLink {
   clear: left;
   float: left;
+  text-decoration: underline;
 }
 
 .send {
