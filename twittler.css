@@ -1,15 +1,56 @@
 body {
   font-family: "Trebuchet MS", "tahoma";
-  width: 80%;
 }
 
 a {
   text-decoration: none;
   color: green;
+}
+
+.titleNav {
+  float: left;
+  width: 100%;
+  padding-top: 10px;
+}
+
+.twittlerTitle {
+  float: left;
+  width: 33%;
+  font-size: 36px;
+  color: olive;
+  text-align: center;
+}
+
+/* CSS for Form */
+.send {
+  background: olive;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 0px;
+  color: white;
+  vertical-align: middle;
+}
+
+.tweetMessage {
+  height: 36px;
+  font-size: 24px;
+  color: silver;
+  width: 240px;
+  background: transparent;
+}
+
+.tweetFormBox {
+  float: left;
+
+  width: 33%;
+  margin-left: auto;
+  margin-right: auto;
 
 }
 
 
+/* CSS for individual tweets */
 .tweet {
   color: lime;
   border: 1px silver solid;
@@ -19,11 +60,10 @@ a {
 }
 
 .tweetContainer {
-  border: 1px olive solid;
-  width: 100%;
+  border: 1px silver solid;
+  width: inherit;
   padding: 5px;
   margin: 5px;
-  border-radius: 8px;
 
 }
 
@@ -34,7 +74,6 @@ a {
 
 .tweetTopLine {
   width: 98%;
- /* border-bottom: black 1px solid; */
   clear: both;
   font-size: 12px;
   font-weight: bold;
@@ -63,49 +102,72 @@ a {
   border: 0px white solid;
 }
 
-.userDetails {
-  color: olive;
-  float: left;
+
+.allContents{
+  margin-left: 5%;
+  margin-right: 5%;
+  border: 1px silver solid;
 }
 
 .allTweets {
-  clear: all;
-  padding-top: 50px;
-
+  clear: left;
+  padding-top: 15px;
 }
 
-#tweetCount {
+
+/* User Details */
+.userDetailBlock {
   float: left;
-  margin-left: 10px;
-  color: olive;
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+  width: 33%;
 }
 
-#lastTweetDate {
-  padding-left: 12px;
+.userStatsContainer {
+  margin-left: 20%;
+  margin-right: 20%;
+  float: left;
+  text-align: center;
+  width: 100%;
+  font-size: 14px;
+}
+
+.userHandle {
+  font-size: 28px;
+  font-weight: bold;
+  text-align: inherit;
+  color: olive;
+  float: left;
+  clear: left;
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.tweetCount {
+  float: left;
+  color: olive;
+  text-align: center;
+}
+
+.lastTweetDate {
   float: left;
   color: olive;
   opacity: 75%;
+  text-align: center;
 }
 
-#allTweetsLink {
-  clear: left;
+.allTweetsLink {
   float: left;
+  clear: all;
   text-decoration: underline;
+  padding-top: 10px;
+  width: 100%;
+  text-align: center;
 }
 
-.send {
-  background: olive;
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  border: 0px;
-  color: white;
-}
+.silverBorder {
+  border-bottom: 1px silver solid;
 
-.tweetMessage {
-  height: 40px;
-  font-size: 24px;
-  color: olive;
-  width: 300px;
-  background: transparent;
 }

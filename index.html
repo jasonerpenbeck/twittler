@@ -99,17 +99,22 @@
         var index = (settings.user === 'all') ? streams.home.length - 1 : streams.users[settings.user].length-1 ;
 
         if(settings.user !== 'all') {
-          $('.userDetails').html('@' + settings.user + ' ');
-          $('#tweetCount').html(' |  Count: ' + (index+1) + ' ');
-          $('#lastTweetDate').html(' | Most Recent: ' + relDate(streams.users[settings.user][index].created_at));
-          $('#allTweetsLink').html('<a href="#" id="viewAllTweets">See All Tweets</a><br><br>');
+          $('.userHandle').html('@' + settings.user + ' ');
+          $('.userHandle').addClass('silverBorder');
+
+          $('.tweetCount').html('Count: ' + (index+1));
+          $('.lastTweetDate').html('| Last: ' + relDate(streams.users[settings.user][index].created_at));
+          $('.allTweetsLink').html('<a href="#" id="viewAllTweets">All Tweets</a>');
+
+
         }
 
         else {
-          $('#tweetCount').html('');
-          $('#lastTweetDate').html('');
-          $('.userDetails').html('');
-          $('#allTweetsLink').html('');
+          $('.userHandle').html('');
+          $('.userHandle').removeClass('silverBorder');
+          $('.tweetCount').html('');
+          $('.lastTweetDate').html('');
+          $('.allTweetsLink').html('');
         }
 
         console.log(index);
@@ -133,10 +138,15 @@
      }
 
       // show tweets once the document is ready and every second after
-      setInterval(displayTweets,3000);
+
+
+      setInterval(displayTweets,1000);
 
       $(document).ready(function() {
         console.log("Ready");
+        displayTweets();
+
+        $('.twittlerTitle').text('twittler');
 
         // add user's tweet to full stream & reset user to 'all'
         $('#tweetForm').on('submit',function(e) {
@@ -145,6 +155,11 @@
           settings.user='all';
           writeTweet(tweetVal);
           $('.tweetMessage').val("Tweet Something!");
+        });
+
+        $('.tweetMessage').on('focus',function(e){
+          $('.tweetMessage').val('');
+
         });
 
         // Set username to whatever was clicked upon
@@ -166,17 +181,37 @@
 
     </script>
 
-    <form id="tweetForm" action="#">
-      <input class="tweetMessage" type="text" maxlength="140" size="140" value="Tweet Something!"> <button type="submit" class="send">send</button>
-    </form>
+   <div class="allContents">
 
-    <div class="userDetails"></div>
-    <div id="tweetCount"></div>
-    <div id="lastTweetDate"></div>
-    <div id="allTweetsLink"></div>
+    <div class="titleNav">
+
+      <div class="twittlerTitle"></div>
+
+      <div class ="tweetFormBox">
+        <form id="tweetForm" action="#">
+          <input class="tweetMessage" type="text" maxlength="140" size="140" value="Tweet Something!"> <button type="submit" class="send">send</button>
+        </form>
+      </div>
+
+      <div class="userDetailBlock">
+
+        <div class="userHandle"></div>
+
+        <div class="userStatsContainer">
+          <div class="tweetCount"></div>
+          <div class="lastTweetDate"></div>
+        </div>
+
+        <div class="allTweetsLink"></div>
+
+      </div>
+
+    </div>
+
 
     <div class="allTweets"></div>
 
+   </div>
 
   </body>
 </html>
